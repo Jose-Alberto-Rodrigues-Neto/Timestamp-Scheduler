@@ -1,0 +1,14 @@
+D:\Documentos\Timestamp-Scheduler-SGBD\bin\Debug\net8.0\Timestamp-Scheduler-SGBD.exe
+D:\Documentos\Timestamp-Scheduler-SGBD\bin\Debug\net8.0\Timestamp-Scheduler-SGBD.deps.json
+D:\Documentos\Timestamp-Scheduler-SGBD\bin\Debug\net8.0\Timestamp-Scheduler-SGBD.runtimeconfig.json
+D:\Documentos\Timestamp-Scheduler-SGBD\bin\Debug\net8.0\Timestamp-Scheduler-SGBD.dll
+D:\Documentos\Timestamp-Scheduler-SGBD\bin\Debug\net8.0\Timestamp-Scheduler-SGBD.pdb
+D:\Documentos\Timestamp-Scheduler-SGBD\obj\Debug\net8.0\Timestamp-Scheduler-SGBD.GeneratedMSBuildEditorConfig.editorconfig
+D:\Documentos\Timestamp-Scheduler-SGBD\obj\Debug\net8.0\Timestamp-Scheduler-SGBD.AssemblyInfoInputs.cache
+D:\Documentos\Timestamp-Scheduler-SGBD\obj\Debug\net8.0\Timestamp-Scheduler-SGBD.AssemblyInfo.cs
+D:\Documentos\Timestamp-Scheduler-SGBD\obj\Debug\net8.0\Timestamp-Scheduler-SGBD.csproj.CoreCompileInputs.cache
+D:\Documentos\Timestamp-Scheduler-SGBD\obj\Debug\net8.0\Timestamp-Scheduler-SGBD.dll
+D:\Documentos\Timestamp-Scheduler-SGBD\obj\Debug\net8.0\refint\Timestamp-Scheduler-SGBD.dll
+D:\Documentos\Timestamp-Scheduler-SGBD\obj\Debug\net8.0\Timestamp-Scheduler-SGBD.pdb
+D:\Documentos\Timestamp-Scheduler-SGBD\obj\Debug\net8.0\Timestamp-Scheduler-SGBD.genruntimeconfig.cache
+D:\Documentos\Timestamp-Scheduler-SGBD\obj\Debug\net8.0\ref\Timestamp-Scheduler-SGBD.dll
