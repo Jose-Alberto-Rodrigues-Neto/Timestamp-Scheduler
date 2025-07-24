@@ -1,2 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿string inputPath = "in.txt";
+string outputPath = "out.txt";        
+Escalonador escalonador = new Escalonador(inputPath, outputPath);
+escalonador.Executar();
