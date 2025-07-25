@@ -12,3 +12,4 @@ D:\Documentos\Timestamp-Scheduler-SGBD\obj\Debug\net8.0\refint\Timestamp-Schedul
 D:\Documentos\Timestamp-Scheduler-SGBD\obj\Debug\net8.0\Timestamp-Scheduler-SGBD.pdb
 D:\Documentos\Timestamp-Scheduler-SGBD\obj\Debug\net8.0\Timestamp-Scheduler-SGBD.genruntimeconfig.cache
 D:\Documentos\Timestamp-Scheduler-SGBD\obj\Debug\net8.0\ref\Timestamp-Scheduler-SGBD.dll
+D:\Documentos\Timestamp-Scheduler-SGBD\obj\Debug\net8.0\Timestamp-Scheduler-SGBD.sourcelink.json

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Timestamp-Scheduler-SGBD")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+75105fb2f7dcdafdf0f0096e72a1bd9131723ace")]
 [assembly: System.Reflection.AssemblyProductAttribute("Timestamp-Scheduler-SGBD")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Timestamp-Scheduler-SGBD")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
