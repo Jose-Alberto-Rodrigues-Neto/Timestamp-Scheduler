@@ -14,7 +14,6 @@ public class Escalonador
     {
         this.inputPath = inputPath;
         this.outputPath = outputPath;
-        Directory.CreateDirectory("logs");
     }
 
     public void Executar()
@@ -43,15 +42,14 @@ public class Escalonador
         string idEscalonamento = linha.Split('-')[0];
         string[] operacoes = linha[(idEscalonamento.Length + 1)..].Trim().Split(' ');
         int momento = 0;
+        int commit = 0;
+
         var estadoObjetos = new Dictionary<string, DadosObjeto>();
         foreach (var nome in objetos)
         {
             var dado = new DadosObjeto(nome);
             estadoObjetos[nome] = dado;
-            File.WriteAllText(dado.LogPath, "");
         }
-
-        File.WriteAllText("C.txt", "");
 
         var objetosUsadosPorTransacao = new Dictionary<string, HashSet<string>>();
         var transacaoPorDado = new Dictionary<string, string>();
@@ -62,7 +60,7 @@ public class Escalonador
 
             if (op.StartsWith("c"))
             {
-                momento++;
+                commit++;
                 foreach (var dado in estadoObjetos.Values)
                 {
                     dado.TS_Read = 0;
@@ -74,9 +72,9 @@ public class Escalonador
             if (op.Length < 5 || op[2] != '(' || !op.EndsWith(")"))
                 continue;
 
-            char tipo = op[0];
-            string tid = "t" + op[1];
-            string obj = op[3].ToString();
+            char tipo = op[0]; // r ou w
+            string tid = "t" + op[1]; // t1, t2, etc
+            string obj = op[3].ToString(); // X, Y, Z
             int tsT = timestamps.ContainsKey(tid) ? timestamps[tid] : 0;
 
             if (!objetosUsadosPorTransacao.ContainsKey(tid))
@@ -93,31 +91,32 @@ public class Escalonador
                 if (tsT < estado.TS_Write)
                     rollback = true;
                 else
-                {
-                    if (estado.TS_Read < tsT)
-                        estado.TS_Read = tsT;
-                }
+                    estado.TS_Read = Math.Max(estado.TS_Read, tsT);
             }
             else if (tipo == 'w')
             {
                 if (tsT < estado.TS_Read || tsT < estado.TS_Write)
                     rollback = true;
                 else
-                {
                     estado.TS_Write = tsT;
-                }
             }
 
+            string operacaoTexto = tipo == 'r' ? "Read" : "Write";
+
             if (rollback)
-                return $"{idEscalonamento}-ROLLBACK-{momento}";
+            {
+                int momentoRollback = momento + commit;
+                File.AppendAllText("logs/log_roulback.txt", $"{idEscalonamento},{operacaoTexto.ToLower()},{momentoRollback}\n");
+                return $"{idEscalonamento}-ROLLBACK-{momentoRollback}";
+            }
+                
 
             momento++;
-            if (tipo == 'r')
-                File.AppendAllText("C.txt", $"{idEscalonamento},read,{momento}\n");
-            else if (tipo == 'w')
-                File.AppendAllText("C.txt", $"{idEscalonamento},write,{momento}\n");
 
-            estado.SalvarLog(idEscalonamento, tipo == 'r' ? "Read" : "Write", momento);
+            if (momento != 0)
+            {
+                estado.SalvarLog(idEscalonamento, operacaoTexto, momento);
+            }
         }
 
         return $"{idEscalonamento}-OK";
