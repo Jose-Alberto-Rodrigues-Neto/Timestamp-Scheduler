@@ -42,7 +42,7 @@ public class Escalonador
     {
         string idEscalonamento = linha.Split('-')[0];
         string[] operacoes = linha[(idEscalonamento.Length + 1)..].Trim().Split(' ');
-
+        int momento = 0;
         var estadoObjetos = new Dictionary<string, DadosObjeto>();
         foreach (var nome in objetos)
         {
@@ -51,9 +51,10 @@ public class Escalonador
             File.WriteAllText(dado.LogPath, "");
         }
 
+        File.WriteAllText("C.txt", "");
+
         var objetosUsadosPorTransacao = new Dictionary<string, HashSet<string>>();
         var transacaoPorDado = new Dictionary<string, string>();
-        int momento = 0;
 
         foreach (string op in operacoes)
         {
@@ -61,6 +62,7 @@ public class Escalonador
 
             if (op.StartsWith("c"))
             {
+                momento++;
                 foreach (var dado in estadoObjetos.Values)
                 {
                     dado.TS_Read = 0;
@@ -83,29 +85,39 @@ public class Escalonador
             objetosUsadosPorTransacao[tid].Add(obj);
             transacaoPorDado[obj] = tid;
 
-            momento++;
-
-            bool permitido = true;
+            var estado = estadoObjetos[obj];
+            bool rollback = false;
 
             if (tipo == 'r')
             {
-                permitido = tsT >= estadoObjetos[obj].TS_Write;
-                if (!permitido)
-                    return $"{idEscalonamento}-ROLLBACK-{momento}";
-
-                if (tsT > estadoObjetos[obj].TS_Read)
-                    estadoObjetos[obj].TS_Read = tsT;
+                if (tsT < estado.TS_Write)
+                    rollback = true;
+                else
+                {
+                    if (estado.TS_Read < tsT)
+                        estado.TS_Read = tsT;
+                }
             }
             else if (tipo == 'w')
             {
-                permitido = tsT >= estadoObjetos[obj].TS_Read;
-                if (!permitido)
-                    return $"{idEscalonamento}-ROLLBACK-{momento}";
-
-                if (tsT >= estadoObjetos[obj].TS_Write)
-                    estadoObjetos[obj].TS_Write = tsT;
+                if (tsT < estado.TS_Read || tsT < estado.TS_Write)
+                    rollback = true;
+                else
+                {
+                    estado.TS_Write = tsT;
+                }
             }
-            estadoObjetos[obj].SalvarLog(idEscalonamento, tipo == 'r' ? "Read" : "Write", momento);            
+
+            if (rollback)
+                return $"{idEscalonamento}-ROLLBACK-{momento}";
+
+            momento++;
+            if (tipo == 'r')
+                File.AppendAllText("C.txt", $"{idEscalonamento},read,{momento}\n");
+            else if (tipo == 'w')
+                File.AppendAllText("C.txt", $"{idEscalonamento},write,{momento}\n");
+
+            estado.SalvarLog(idEscalonamento, tipo == 'r' ? "Read" : "Write", momento);
         }
 
         return $"{idEscalonamento}-OK";
